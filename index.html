@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NotesWall</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+  }
+  .notes-container {
+    max-width: 600px;
+    width: 100%;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+  }
+
+  textarea{
+        width: 380px;
+        height: 100px;
+        border-radius: 5px;
+        box-shadow: 5px 10px 10px 0px black;
+  }
+  .note-list {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 10px;
+    width: 100px;
+    height: 300px;
+  }
+  .note {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  .note-text {
+    flex: 1;
+  }
+  .note-actions {
+    display: flex;
+    gap: 5px;
+  }
+  .add-note {
+    margin-top: 10px;
+  }
+
+  .clr{
+   display: flex;
+   flex-direction: column;
+  }
+
+  #addButton{
+   width: 80px;
+   height: 30px;
+   cursor: pointer;
+   background-color: rgb(64, 67, 126);
+   color: white;
+   
+  }
+
+
+  #colorPicker{
+   width: 80px;
+   height: 30px;
+  }
+</style>
+
+</head>
+<body>
+<div class="notes-container">
+  <div class="add-note">
+    <textarea placeholder="//Write a Note here."></textarea>
+    
+  </div>
+  <div class="clr">
+  <input type="color" id="colorPicker" value="#f9f9f9">
+    <button id="addButton">Add Note</button>
+   </div>
+  <div class="note-list"></div>
+
+<script>
+  const addButton = document.getElementById('addButton');
+  const noteList = document.querySelector('.note-list');
+  const colorPicker = document.getElementById('colorPicker');
+
+  addButton.addEventListener('click', () => {
+    const textarea = document.querySelector('.add-note textarea');
+    const noteText = textarea.value.trim();
+    const noteColor = colorPicker.value;
+
+    if (noteText !== '') {
+      const noteElement = document.createElement('div');
+      noteElement.classList.add('note');
+      noteElement.innerHTML = `
+        <div class="note-text">${noteText}</div>
+        <div class="note-actions">
+          <button class="delete-button">Delete</button>
+        </div>
+      `;
+      noteElement.style.backgroundColor = noteColor;
+
+      const deleteButton = noteElement.querySelector('.delete-button');
+      deleteButton.addEventListener('click', () => {
+        noteList.removeChild(noteElement);
+      });
+
+      noteList.appendChild(noteElement);
+      textarea.value = '';
+    }
+  });
+</script>
+</body>
+</html>
